@@ -35,6 +35,7 @@ function App() {
     idFilme: '',
     inicioAluguel: '',
     devolucaoAluguel: '',
+    valorAluguel: '',
   });
   const [editandoId, setEditandoId] = useState(null);
 
@@ -72,6 +73,7 @@ function App() {
       idFilme: Number(form.idFilme),
       inicioAluguel: form.inicioAluguel,
       devolucaoAluguel: form.devolucaoAluguel,
+      valorAluguel: Number(form.valorAluguel)
     };
 
     if (editandoId !== null) {
@@ -80,7 +82,7 @@ function App() {
       await api.post('/alugueis/adicionar', payload);
     }
 
-    setForm({ idUsuario: '', idFilme: '', inicioAluguel: '', devolucaoAluguel: '' });
+    setForm({ idUsuario: '', idFilme: '', inicioAluguel: '', devolucaoAluguel: '' , valorAluguel: ''});
     setEditandoId(null);
     carregarAlugueis();
   };
@@ -91,6 +93,7 @@ function App() {
       idFilme: aluguel.idFilme,
       inicioAluguel: aluguel.inicioAluguel,
       devolucaoAluguel: aluguel.devolucaoAluguel,
+      valorAluguel: aluguel.valorAluguel
     });
     setEditandoId(aluguel.idAluguel);
   };
@@ -133,6 +136,14 @@ function App() {
           onChange={handleChange}
           required
         />
+        <input
+          type="number"
+          name="valorAluguel"
+          placeholder="Valor do aluguel"
+          value={form.valorAluguel}
+          onChange={handleChange}
+          required
+        />
         <button type="submit">{editandoId ? 'Atualizar' : 'Adicionar'}</button>
       </form>
 
@@ -145,6 +156,7 @@ function App() {
             <th>ID Filme</th>
             <th>Início</th>
             <th>Devolução</th>
+            <th>Valor</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -156,6 +168,7 @@ function App() {
               <td>{a.idFilme}</td>
               <td>{a.inicioAluguel}</td>
               <td>{a.devolucaoAluguel}</td>
+              <td>{a.valorAluguel}</td>
               <td>
                 <button onClick={() => handleEdit(a)}>Editar</button>
                 <button onClick={() => handleDelete(a.idAluguel)}>Remover</button>
